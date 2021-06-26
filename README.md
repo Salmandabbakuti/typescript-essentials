@@ -135,7 +135,7 @@ anotherObject = {
   }
 }
 ```
-##### 5. Functions:
+##### 5. Functions and Classes:
 
 ```typescript
 // 1. Function type //dont care about args and return
@@ -148,14 +148,149 @@ let someTypedFunction = ():number => {
 }
 
 // valid if args and return type satisfies
-const someTypedFunction = (a: number, b: number): number => {
+const someTypedFunction2 = (a: number, b: number): number => {
   const sum: number = a + b;
   return sum;
 }
+someTypedFunction2(5,8) // works
+someTypedFunction2(5,'8') // wont work
+someTypedFunction2(5,8, 2) // wont work. args are more than defined
 
 // wont work coz return type is different
-const someTypedFunction = (a: number, b: number):number => {
+const someTypedFunction3 = (a: number, b: number):number => {
   const sum: number = a + b;
   return 'Hey are you there?';
+}
+
+//  classes
+class Person {
+  // property type declaration
+  name: string;
+  age: number = 0; // defaults to 0
+  constructor(name: string, age: number) {
+    // valid
+    this.name = name;
+    this.age = age;
+  }
+}
+let person = new Person('Kiran', 22) // works
+person = new Person(22, 'Kiran') // wont work
+person = new Person(22)
+
+```
+
+##### 6. Compose Types, Interfaces, Unions:
+
+```typescript
+
+type JustNumber = number;
+type Person = {
+  name: string,
+  age: number,
+  favColors: string[]
+}
+const someNumber: justNumber = 12;
+let somePerson: Person;
+
+// works
+somePerson = {
+  name: 'Kiran',
+  age: 22,
+  favColors: ['blue', 'green', 'yellow']
+}
+
+// wont work
+somePerson = {
+  name: 22,
+  age: 'Kiran',
+  favColors: 'Yellow'
+}
+
+// interfaces:same as 'type' but can be extended
+
+interface DifferentPerson {
+  name: string,
+  age: number,
+}
+const personA: DifferentPerson = {
+  name: 'personA',
+  age: 23
+};
+// extending interface to new Interface
+interface Teacher extends DifferentPerson {
+  subject: string,
+}
+const personB: Teacher = {
+  name: 'personB',
+  age: 23,
+  subject: 'Chemistry'
+}
+
+// unions '|' operator
+
+let input: string | number = 44;
+input = 55; // works
+input = 'this also valid'; // works
+input = true; // invalid
+
+// unions on type
+type A = {
+  a: string,
+  b: string,
+};
+type B = {
+  c: string,
+  d: number,
+};
+// either a value of type A or B can be assigned to the below declaration
+type AOrB = A | B;
+
+// works
+let ab: AOrB ={
+  a:'text1',
+  b:'text2'
+}
+// works
+ab = {
+  c: 'text',
+  d: 22
+}
+
+// wont work
+ab = {
+  e:22,
+  f:34
+}
+
+// wont work
+ab = {
+  a: 22,
+  b: 32
+}
+
+// a should be either string or array of strings
+function unionFunction (a: string | string[]){
+  // do something
+}
+
+// intersection '&'
+type SomeA = {
+  a: string;
+};
+type SomeB = {
+  b: string;
+};
+// Now only a value having all the fields declared in SomeA
+// and SomeB combined can be assigned to following declaration
+type SomeTypeAAndB = SomeA & SomeB;
+
+// works
+let bc: SomeTypeAAndB = {
+  a:'test',
+  b:'test2'
+}
+// wont work because you need to define all
+bc = {
+  a : 'test'
 }
 ```
