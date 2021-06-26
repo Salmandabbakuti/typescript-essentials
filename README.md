@@ -131,7 +131,31 @@ anotherObject = {
   someNo: 'hi',
   someString: 24,
   sayHi: () => {
-    return 'Hey Im returning. but compiler is strict.!'
+    return 'Hey Im returning. but compiler allows as it is void'
   }
+}
+```
+##### 5. Functions:
+
+```typescript
+// 1. Function type //dont care about args and return
+let someTypedFunction: Function = () => {
+  console.log('I dont care about no.of args passed and return type aswell');
+}
+// wont work because you need to return number in function code
+let someTypedFunction = ():number => {
+  console.log('I dont care about no.of args passed and return type aswell');
+}
+
+// valid if args and return type satisfies
+const someTypedFunction = (a: number, b: number): number => {
+  const sum: number = a + b;
+  return sum;
+}
+
+// wont work coz return type is different
+const someTypedFunction = (a: number, b: number):number => {
+  const sum: number = a + b;
+  return 'Hey are you there?';
 }
 ```
