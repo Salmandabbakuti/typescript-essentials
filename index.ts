@@ -212,3 +212,28 @@ let bc: SomeTypeAAndB = {
 bc = {
   a: 'test'
 }
+// we do not know what will be the return type of this function
+function AnyFunction(input: any) {
+  return input;
+}
+const resp = AnyFunction(12) // resp type will be any
+
+// with generics:  <T> specifies type variable and also it specifies the arguments type and return type values.
+function anyFunction1<T>(input: T) {
+  return input;
+}
+
+// initializations
+const response: string = anyFunction1<string>('welcome');
+const response2: number = anyFunction1<number>(12);
+
+// typeof 
+let s = "hello";
+let q = 4
+let n: typeof s; // n will be string aswell
+let p: typeof q; // p will be number type
+
+function f() {
+  return { x: 10, y: 3 };
+}
+type R = typeof f; // type of R will be object with number properties as 'f'
